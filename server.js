@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const { uploader } = require("./uploads/upload");
+const { uploader } = require("./upload");
 const { getImages, createImage } = require("./db");
 
 app.use(express.static(path.join(__dirname, "public")));
