@@ -19,6 +19,16 @@ app.get("/images", (request, response) => {
         });
 });
 
+app.post("/images", uploader.single("file"), (request, response) => {
+    /* const url = getURLFromFilename(request.file.filename);
+    createImage({ url, ...request.body })
+        .then((image) => response.json(image))
+        .catch((error) => { */
+    console.log("upload successful", request.file, request.body);
+    response.sendStatus(200);
+    //  });
+});
+
 app.get("/upload", (request, response) => {
     response.send(`
     <form enctype="multipart/form-data" action="/upload" method="POST">

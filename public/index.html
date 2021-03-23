@@ -9,6 +9,33 @@
 
 <main id="main">
     <h1>Imageboard</h1>
+
+      <section>
+        <h2>Images:</h2>
+    <form enctype="multipart/form-data" action="/images" method="POST" v-on:submit.prevent="onSubmit">
+    <div class="fields">
+
+        <div class="field">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" placeholder="Image Title" v-model="title" required/>
+        </div>
+        <div class="field">
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" v-model="description" placeholder="Image Description" required/>
+        </div>
+        <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" v-model="username" placeholder="Username" required/>
+        </div>
+        <div class="file">
+        <input type="file" id="image" name="image" ref="image" accept="image/*" v-on:change="onFileSelect" required/>
+        </div>
+        <div class="button">
+        <button type="submit" class="action">Upload</button>
+        </div>
+    </div>
+    </form>
+    </section>
   
 
     <section class="images">
