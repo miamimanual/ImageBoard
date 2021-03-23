@@ -3,8 +3,10 @@ const path = require("path");
 const app = express();
 const { uploader } = require("./upload");
 const { getImages, createImage } = require("./db");
+const { s3upload } = require("./s3");
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/images", (request, response) => {
     getImages()
@@ -19,14 +21,14 @@ app.get("/images", (request, response) => {
         });
 });
 
-app.post("/images", uploader.single("file"), (request, response) => {
-    /* const url = getURLFromFilename(request.file.filename);
-    createImage({ url, ...request.body })
+app.post("/images", uploader.single("file"), s3upload, (request, response) => {
+    const url = `https://s3.amazonaws.com/spicedling/${request.file.filename}`;
+    createImage({ url, ...request.body }) // username: request.body.username; ...
         .then((image) => response.json(image))
-        .catch((error) => { */
-    console.log("upload successful", request.file, request.body);
-    response.sendStatus(200);
-    //  });
+        .catch((error) => {
+            console.log("imageboard:express] error saving image", error);
+            response.sendStatus(500);
+        });
 });
 
 app.get("/upload", (request, response) => {
