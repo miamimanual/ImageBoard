@@ -1,10 +1,32 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/style.css">
+    <title>Imageboard</title>
 </head>
 <body>
+
+<main id="main">
+    <h1>Imageboard</h1>
+  
+
+    <section class="images">
+              <ul v-if="images.length > 0" class="images">
+        <li v-for="image in images"> 
+            <article class="image">
+                <img :src="image.url" :alt="image.description">
+                <p class="description">{{ image.description }}</p>
+            </article>
+        </li>
+    </ul>
+    </section>
+    
+</main>
+
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>
+

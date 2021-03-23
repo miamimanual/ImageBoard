@@ -1,4 +1,3 @@
-const { query } = require("express");
 const spicedPg = require("spiced-pg");
 
 const database = process.env.DB || "imageboard";
@@ -17,6 +16,16 @@ function getImages() {
     return db.query("SELECT * FROM images").then((result) => result.rows);
 }
 
+function createImage({ url, title, description, username }) {
+    return db
+        .query(
+            "INSERT INTO images (url, title, description, username) VALUES ($1, $2, $3, $4) RETURNING *",
+            [url, title, description, username]
+        )
+        .then((result) => result.rows[0]);
+}
+
 module.exports = {
     getImages,
+    createImage,
 };
