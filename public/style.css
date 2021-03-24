@@ -3,17 +3,26 @@
 }
 
 body {
-    margin: 0;
+    margin: 8px;
     min-height: 100hv;
-    background-color: aquamarine;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    background-color: #fbeeac;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 img {
     width: 20rem;
     height: 15rem;
     object-fit: cover;
+}
+
+.images {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.fields {
+    display: flex;
 }

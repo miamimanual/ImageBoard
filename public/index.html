@@ -8,11 +8,15 @@
 <body>
 
 <main id="main">
-    <h1>Imageboard</h1>
+    <h1>Imageboard</h1>    
+    <detail 
+    v-bind:description="originalText"
+    @click="updateDescription"></detail>
+
 
       <section>
-        <h2>Images:</h2>
-    <form enctype="multipart/form-data" action="/images" method="POST" v-on:submit.prevent="onSubmit">
+
+        <form enctype="multipart/form-data" action="/images" method="POST" v-on:submit.prevent="onSubmit">
     <div class="fields">
 
         <div class="field">
@@ -36,9 +40,8 @@
     </div>
     </form>
     </section>
-  
 
-    <section class="images">
+    <section class="images-box">
               <ul v-if="images.length > 0" class="images">
         <li v-for="image in images"> 
             <article class="image">
@@ -48,8 +51,19 @@
         </li>
     </ul>
     </section>
+
     
 </main>
+
+
+<script id="detail" type="text/x-template">
+        <div class="detail">
+            <h1>{{ title }}</h1>
+            <p>{{ description }}</p>
+            <button v-on:click="onButtonClick">Update description</button>
+        </div>
+</script>
+
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
