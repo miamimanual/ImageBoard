@@ -41,9 +41,9 @@
     </form>
     </section>
 
-    <section class="images-box">
-              <ul v-if="images.length > 0" class="images">
-        <li v-for="image in images"> 
+    <section class="images">
+        <ul v-if="images.length > 0" class="images">
+        <li v-for="image in images" v-on:click="onClick(image.id)"> 
             <article class="image">
                 <img :src="image.url" :alt="image.description">
                 <p class="description">{{ image.description }}</p>
@@ -52,17 +52,17 @@
     </ul>
     </section>
 
-    <popup @click="imageBig"></popup>  
+    <popup v-if="currentImageId" v-bind:image-id="currentImageId" @close="onClose"></popup>  
 
 </main>
 
 <script id="popup" type="text/x-template">
-    <div class="popup" v-blind:class="{ visible }">
-        <img :src="image.url" :alt="{{ image.description }}">
+    <div class="popup" v-blind:class="{ visible }"> <!-- image or popup-->
+        <img :src="image.url" alt="">
         <p class="description">{{ image.description }}</p>
         <p class="title">{{ image.title }}</p>
         <p class="username">{{ image.username }}</p>
-        <button v-on:click="onButtonClick">x</button>
+        <button v-on:click="close">x</button>
 
     </div>
 </script>
@@ -79,7 +79,6 @@
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="/script.js"></script>
 </body>
 </html>

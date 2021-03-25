@@ -5,18 +5,24 @@
         data: function () {
             return {
                 visible: false,
-                images: {}, // zasto su ove zagrade a ne []
+                image: {}, // zasto su ove zagrade a ne []
             };
         },
         mounted: function () {
+            console.log("THIS iMAGEid", this.imageId);
+            console.log("THIS image", this.image);
+
             axios.get(`/images/${this.imageId}`).then((response) => {
                 this.visible = true;
-                this.images = response.data; // oslanja se na Vue
+                this.image = response.data[0]; // oslanja se na Vue
+                console.log("THIS iMAGEid", this.imageId);
+                console.log("THIS image", this.image);
+                console.log("THIS image", this.images);
             });
         },
         methods: {
-            onClick: function () {
-                this.$emit("click");
+            close: function () {
+                this.$emit("close");
             },
         },
     });
@@ -45,6 +51,7 @@
             username: "",
             file: null,
             images: [],
+            currentImageId: null,
         },
 
         mounted: function () {
@@ -57,11 +64,6 @@
             });
         },
         methods: {
-            imageBig: function () {
-                let $modal = $("#modal");
-                let $span = $(".close");
-                $modal.css("display", "block");
-            },
             updateDescription: function () {
                 this.originalText = "This is app is not so great actually.";
             },
@@ -81,6 +83,12 @@
             },
             onFileSelect: function () {
                 this.file = this.$refs.image.files[0];
+            },
+            onClick: function (imageId) {
+                this.currentImageId = imageId;
+            },
+            onClose: function () {
+                this.currentImageId = null;
             },
         },
     });
