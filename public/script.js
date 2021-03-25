@@ -28,9 +28,19 @@
     });
 
     Vue.component("comments", {
-        template: "comments",
+        template: "#comments",
         props: ["imageId"],
-        data: 
+        data: function () {
+            return {
+                comments: [],
+                username: "",
+                text: "",
+            };
+        },
+        mounted: function() {
+             axios.get(`/images/${this.imageId}/comments`).then((response) => { 
+                this.image = response.data[0]; // oslanja se na Vue
+        }
     });
 
     Vue.component("detail", {
@@ -97,6 +107,9 @@
             onClose: function () {
                 this.currentImageId = null;
             },
+            onSubmit: function (username, text) {
+
+            }
         },
     });
 })();

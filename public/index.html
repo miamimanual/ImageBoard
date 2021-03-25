@@ -63,9 +63,32 @@
         <p class="title">{{ image.title }}</p>
         <p class="username">{{ image.username }}</p>
         <button v-on:click="close">x</button>
-
+        
+        <div class="popup-content">
+    
+            <comments v-bind:image-id="imageId"></comments>
+        </div>
     </div>
 </script>
+
+
+<script id="comments" type="text/x-template">
+    <div class="comments">
+         <ul class="comments-list" v-if="comments.length > 0">
+            <li v-for="comment in comments"></li>
+        </ul>
+        <form>
+            <input type="username" name="username" id="username" placeholder="{{ image.username }}"/>
+            <textarea name="comment-text" id="comment-text" cols="30" rows="10" placeholder="Comment"></textarea>    <!-- bound to text -->
+            <button id="button" type="submit">Send</button>
+
+        </form>
+
+
+    </div>
+
+</script>
+
 
 
 <script id="detail" type="text/x-template">
