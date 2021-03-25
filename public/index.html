@@ -58,14 +58,15 @@
 
 <script id="popup" type="text/x-template">
     <div class="popup"> 
-        <img :src="image.url" alt="">
-        <p class="description">{{ image.description }}</p>
-        <p class="title">{{ image.title }}</p>
-        <p class="username">{{ image.username }}</p>
         <button v-on:click="close">x</button>
-        
+        <img :src="image.url" alt="">
+        <p class="title">{{ image.title }}</p>
+        <p class="description">{{ image.description }}</p>
+        <p class="info">
+            Uploaded by<p class="username">{{ image.username }}</p>
+            on <time>{{ image.created_at }}</time>
+        </p>        
         <div class="popup-content">
-    
             <comments v-bind:image-id="imageId"></comments>
         </div>
     </div>
@@ -73,20 +74,28 @@
 
 
 <script id="comments" type="text/x-template">
-    <div class="comments">
+    <section class="comments">
          <ul class="comments-list" v-if="comments.length > 0">
-            <li v-for="comment in comments"></li>
+            <li v-for="comment in comments">
+            <p class="text">{{ comment.tect }}</p>
+            <p class="info">
+            {{ comment.username }}
+            on <time>{{ comment.created_at }}</time>
+            </p>
+            </li>
         </ul>
-        <form>
-            <input type="username" name="username" id="username" placeholder="{{ image.username }}"/>
-            <textarea name="comment-text" id="comment-text" cols="30" rows="10" placeholder="Comment"></textarea>    <!-- bound to text -->
+
+        <p v-if="!comments.length" class="no-comments">No comments for now!</p>
+        <form v-on:submit.prevent="onSubmit">
+            <input type="text" name="username" id="username" 
+            placeholder="Type your username" v-model="username" required/>
+            <textarea name="comment-text" id="comment-text" 
+            cols="30" rows="10" placeholder="Type your comment" v-model="text" required>
+            </textarea>    <!-- bound to text -->
             <button id="button" type="submit">Send</button>
 
         </form>
-
-
-    </div>
-
+    </section>
 </script>
 
 

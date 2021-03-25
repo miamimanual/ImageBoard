@@ -2,7 +2,13 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const { uploader } = require("./upload");
-const { getImages, createImage, getImageById } = require("./db");
+const {
+    getImages,
+    createImage,
+    getImageById,
+    addCommentToImage,
+    getCommentsByImageId,
+} = require("./db");
 const { s3upload } = require("./s3");
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -17,6 +23,35 @@ app.get("/images", (request, response) => {
         })
         .catch((error) => {
             console.log("error", error);
+            response.sendStatus(500);
+        });
+});
+
+app.get("/images/:imageId/comments", (request, response) => {
+    const { imageId } = request.params;
+    getCommentsByImageId(imageId)
+        .then((comments) => response.json(comments))
+        .catch((error) => {
+            console.log(
+                "[imageboard:express] error getting image comment",
+                error
+            );
+            response.sendStatus(500);
+        });
+});
+
+app.post("/images/:imageId/comments", (request, response) => {
+    const { imageId } = request.params;
+    const { username } = request.body.username;
+    const { text } = request.body.text;
+
+    addCommentToImage({ username, imageId, text })
+        .then((comment) => response.json(comment))
+        .catch((error) => {
+            console.log(
+                "[imageboard:express] error adding image comment",
+                error
+            );
             response.sendStatus(500);
         });
 });

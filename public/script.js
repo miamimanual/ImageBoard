@@ -37,10 +37,24 @@
                 text: "",
             };
         },
-        mounted: function() {
-             axios.get(`/images/${this.imageId}/comments`).then((response) => { 
-                this.image = response.data[0]; // oslanja se na Vue
-        }
+        mounted: function () {
+            axios
+                .get(`/images/${this.imageId}/comments`)
+                .then((response) => (this.image = response.data[0])); // oslanja se na Vue
+        },
+        methods: {
+            onSubmit: function () {
+                axios.post(`/images/${this.imageId}/comments`, {
+                    username: this.username,
+                    text: this.text,
+                });
+                then((response) => {
+                    (this.username = ""),
+                        (this.text = ""),
+                        this.comments.push(response.data); // unshift
+                });
+            },
+        },
     });
 
     Vue.component("detail", {
@@ -107,9 +121,7 @@
             onClose: function () {
                 this.currentImageId = null;
             },
-            onSubmit: function (username, text) {
-
-            }
+            onSubmit: function (username, text) {},
         },
     });
 })();

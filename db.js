@@ -29,7 +29,25 @@ function createImage({ url, title, description, username }) {
 
 function getImageById(imageId) {
     return db
-        .query("SELECT * FROM images WHERE id=$1", [imageId])
+        .query("SELECT * FROM images WHERE id = $1", [imageId])
+        .then((result) => result.rows);
+}
+
+function addCommentToImage({ username, imageId, text }) {
+    return db
+        .query(
+            "INSERT INTO comments (username, imageId, text) VALUES ($1, $2, $3) RETURNING *",
+            [username, imageId, text]
+        )
+        .then((result) => result.rows[0]);
+}
+
+function getCommentsByImageId(imageId) {
+    return db
+        .query(
+            "SELECT * FROM comments WHERE imageId = $1 ORDER BY created_at DESC",
+            [imageId]
+        )
         .then((result) => result.rows);
 }
 
@@ -37,4 +55,6 @@ module.exports = {
     getImages,
     createImage,
     getImageById,
+    addCommentToImage,
+    getCommentsByImageId,
 };
