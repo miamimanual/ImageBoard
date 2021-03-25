@@ -4,7 +4,6 @@
         props: ["imageId"], // ovo je ono sto potrazujemo, narucujemo u restoranu;
         data: function () {
             return {
-                visible: false,
                 image: {}, // zasto su ove zagrade a ne []
             };
         },
@@ -13,11 +12,12 @@
             console.log("THIS image", this.image);
 
             axios.get(`/images/${this.imageId}`).then((response) => {
-                this.visible = true;
                 this.image = response.data[0]; // oslanja se na Vue
                 console.log("THIS iMAGEid", this.imageId);
                 console.log("THIS image", this.image);
                 console.log("THIS image", this.images);
+                console.log("response 0", response.data[0]);
+                console.log("response", response.data);
             });
         },
         methods: {
@@ -25,6 +25,12 @@
                 this.$emit("close");
             },
         },
+    });
+
+    Vue.component("comments", {
+        template: "comments",
+        props: ["imageId"],
+        data: 
     });
 
     Vue.component("detail", {
@@ -51,7 +57,7 @@
             username: "",
             file: null,
             images: [],
-            currentImageId: null,
+            currentImageId: null, // why null
         },
 
         mounted: function () {
@@ -82,7 +88,8 @@
                     .then((response) => this.images.push(response.data)); // bilo je detail, to je bila greska
             },
             onFileSelect: function () {
-                this.file = this.$refs.image.files[0];
+                this.file = this.$refs.image.files[0]; //proveri sta je refs
+                console.log("refs", $refs.image.files);
             },
             onClick: function (imageId) {
                 this.currentImageId = imageId;

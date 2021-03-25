@@ -13,7 +13,9 @@ function getDatabaseURL() {
 const db = spicedPg(getDatabaseURL());
 
 function getImages() {
-    return db.query("SELECT * FROM images").then((result) => result.rows);
+    return db
+        .query("SELECT * FROM images ORDER BY id DESC")
+        .then((result) => result.rows);
 }
 
 function createImage({ url, title, description, username }) {

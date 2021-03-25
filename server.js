@@ -40,6 +40,9 @@ app.get("/images/:imageId", (request, response) => {
     const imageId = request.params.imageId;
     console.log("IMAGEID", request.params.imageId);
     console.log("body IMAGEID", request.body.imageId);
+    console.log("request.body");
+    console.log("request.params");
+
     getImageById(imageId)
         .then((result) => {
             response.json(result);
