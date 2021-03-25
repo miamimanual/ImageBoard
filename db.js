@@ -25,7 +25,14 @@ function createImage({ url, title, description, username }) {
         .then((result) => result.rows[0]);
 }
 
+function getImageById(imageId) {
+    return db
+        .query("SELECT * FROM images WHERE id=$1", [imageId])
+        .then((result) => result.rows);
+}
+
 module.exports = {
     getImages,
     createImage,
+    getImageById,
 };

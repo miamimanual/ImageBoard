@@ -1,4 +1,26 @@
 (function () {
+    Vue.component("popup", {
+        template: "#popup",
+        props: ["imageId"], // ovo je ono sto potrazujemo, narucujemo u restoranu;
+        data: function () {
+            return {
+                visible: false,
+                images: {}, // zasto su ove zagrade a ne []
+            };
+        },
+        mounted: function () {
+            axios.get(`/images/${this.imageId}`).then((response) => {
+                this.visible = true;
+                this.images = response.data; // oslanja se na Vue
+            });
+        },
+        methods: {
+            onClick: function () {
+                this.$emit("click");
+            },
+        },
+    });
+
     Vue.component("detail", {
         template: "#detail",
         props: ["description"],
@@ -35,6 +57,11 @@
             });
         },
         methods: {
+            imageBig: function () {
+                let $modal = $("#modal");
+                let $span = $(".close");
+                $modal.css("display", "block");
+            },
             updateDescription: function () {
                 this.originalText = "This is app is not so great actually.";
             },
