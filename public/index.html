@@ -52,7 +52,11 @@
     </ul>
     </section>
 
-    <popup v-if="currentImageId" v-bind:image-id="currentImageId" @close="onClose"></popup>  
+    <popup 
+    v-if="currentImageId" 
+    v-bind:image-id="currentImageId" 
+    @close="onClose">
+    </popup>  
 
 </main>
 

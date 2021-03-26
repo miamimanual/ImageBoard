@@ -44,15 +44,16 @@
         },
         methods: {
             onSubmit: function () {
-                axios.post(`/images/${this.imageId}/comments`, {
-                    username: this.username,
-                    text: this.text,
-                });
-                then((response) => {
-                    (this.username = ""),
-                        (this.text = ""),
-                        this.comments.push(response.data); // unshift
-                });
+                axios
+                    .post(`/images/${this.imageId}/comments`, {
+                        username: this.username,
+                        text: this.text,
+                    })
+                    .then((response) => {
+                        (this.username = ""),
+                            (this.text = ""),
+                            this.comments.push(response.data); // unshift
+                    });
             },
         },
     });
