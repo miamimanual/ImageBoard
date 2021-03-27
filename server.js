@@ -13,6 +13,7 @@ const { s3upload } = require("./s3");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get("/images", (request, response) => {
     getImages()
@@ -28,7 +29,7 @@ app.get("/images", (request, response) => {
 });
 
 app.get("/images/:imageId/comments", (request, response) => {
-    const { imageId } = request.params;
+    const { imageId } = request.params.imageId;
     getCommentsByImageId(imageId)
         .then((comments) => response.json(comments))
         .catch((error) => {
@@ -42,10 +43,10 @@ app.get("/images/:imageId/comments", (request, response) => {
 
 app.post("/images/:imageId/comments", (request, response) => {
     const { imageId } = request.params;
-    const { username } = request.body.username;
-    const { text } = request.body.text;
+    // const { username } = request.body.username;
+    //const { text } = request.body.text;
 
-    addCommentToImage({ username, imageId, text })
+    addCommentToImage({ imageId, ...request.body })
         .then((comment) => response.json(comment))
         .catch((error) => {
             console.log(

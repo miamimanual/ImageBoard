@@ -36,7 +36,7 @@ function getImageById(imageId) {
 function addCommentToImage({ username, imageId, text }) {
     return db
         .query(
-            "INSERT INTO comments (username, imageId, text) VALUES ($1, $2, $3) RETURNING *",
+            "INSERT INTO comments (username, image_id, text) VALUES ($1, $2, $3) RETURNING *",
             [username, imageId, text]
         )
         .then((result) => result.rows[0]);
@@ -45,7 +45,7 @@ function addCommentToImage({ username, imageId, text }) {
 function getCommentsByImageId(imageId) {
     return db
         .query(
-            "SELECT * FROM comments WHERE imageId = $1 ORDER BY created_at DESC",
+            "SELECT * FROM comments WHERE image_id = $1 ORDER BY created_at DESC",
             [imageId]
         )
         .then((result) => result.rows);

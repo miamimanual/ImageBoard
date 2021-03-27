@@ -15,7 +15,7 @@
                 this.image = response.data[0]; // oslanja se na Vue
                 console.log("THIS iMAGEid", this.imageId);
                 console.log("THIS image", this.image);
-                console.log("THIS image", this.images);
+                console.log("THIS image", this.images); // undefined
                 console.log("response 0", response.data[0]);
                 console.log("response", response.data);
             });
@@ -99,6 +99,7 @@
                 this.originalText = "This is app is not so great actually.";
             },
             onSubmit: function () {
+                console.log("onSubmit");
                 const formData = new FormData();
                 formData.append("title", this.title);
                 formData.append("description", this.description);
@@ -114,7 +115,7 @@
             },
             onFileSelect: function () {
                 this.file = this.$refs.image.files[0]; //proveri sta je refs
-                console.log("refs", $refs.image.files);
+                /* console.log("refs", this.file); */
             },
             onClick: function (imageId) {
                 this.currentImageId = imageId;
@@ -122,7 +123,6 @@
             onClose: function () {
                 this.currentImageId = null;
             },
-            onSubmit: function (username, text) {},
         },
     });
 })();
