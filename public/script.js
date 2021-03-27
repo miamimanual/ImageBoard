@@ -38,9 +38,12 @@
             };
         },
         mounted: function () {
-            axios
-                .get(`/images/${this.imageId}/comments`)
-                .then((response) => (this.image = response.data[0])); // oslanja se na Vue
+            console.log("[vue:comments] getting image id:", this.imageId);
+            axios.get(`/images/${this.imageId}/comments`).then((response) => {
+                console.log("RESPONSE DATA", response.data);
+                this.comments = response.data;
+            });
+            console.log("Comments", this.comments); // oslanja se na Vue
         },
         methods: {
             onSubmit: function () {
@@ -48,11 +51,13 @@
                     .post(`/images/${this.imageId}/comments`, {
                         username: this.username,
                         text: this.text,
+                        imageId: this.imageId,
+                        //  comments: this.comments,
                     })
                     .then((response) => {
-                        (this.username = ""),
-                            (this.text = ""),
-                            this.comments.push(response.data); // unshift
+                        this.comments.push(response.data);
+                        this.username = "";
+                        this.text = "";
                     });
             },
         },

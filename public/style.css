@@ -4,15 +4,12 @@
 
 body {
     margin: 8px;
-    min-height: 100hv;
     background-color: #fbeeac;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-img {
-    width: 20rem;
-    height: 15rem;
-    object-fit: cover;
+main {
+    min-height: 100hv;
 }
 
 .images {
@@ -21,6 +18,12 @@ img {
     align-items: center;
     flex-wrap: wrap;
     list-style: none;
+}
+
+img {
+    width: 20rem;
+    height: 15rem;
+    object-fit: cover;
 }
 
 .fields {

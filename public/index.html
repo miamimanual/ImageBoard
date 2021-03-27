@@ -11,7 +11,8 @@
     <h1>Imageboard</h1>    
     <detail 
     v-bind:description="originalText"
-    @click="updateDescription"></detail>
+    @click="updateDescription">
+    </detail>
 
 
       <section>
@@ -67,10 +68,10 @@
         <p class="title">{{ image.title }}</p>
         <p class="description">{{ image.description }}</p>
         <p class="info">
-            Uploaded by<p class="username">{{ image.username }}</p>
+            Uploaded by:<p class="username">{{ image.username }}</p>
             on <time>{{ image.created_at }}</time>
         </p>        
-        <div class="popup-content">
+        <div class="popup-comments">
             <comments v-bind:image-id="imageId"></comments>
         </div>
     </div>
@@ -83,14 +84,14 @@
             <li v-for="comment in comments">
             <p class="text">{{ comment.text }}</p>
             <p class="info">
-            {{ comment.username }}
+            by {{ comment.username }}
             on <time>{{ comment.created_at }}</time>
             </p>
             </li>
         </ul>
 
         <p v-if="!comments.length" class="no-comments">No comments for now!</p>
-        <form v-on:submit.prevent="onSubmit">
+        <form method="post" v-on:submit.prevent="onSubmit">
             <input type="text" name="username" id="username" 
             placeholder="Type your username" v-model="username" required/>
             <textarea name="comment-text" id="comment-text" 
