@@ -29,9 +29,14 @@ app.get("/images", (request, response) => {
 });
 
 app.get("/images/:imageId/comments", (request, response) => {
-    const { imageId } = request.params.imageId;
+    const imageId = request.params.imageId;
+    console.log("request.params.imageId", request.params.imageId);
+    console.log("imageID by app.get", imageId);
     getCommentsByImageId(imageId)
-        .then((comments) => response.json(comments))
+        .then((comments) => {
+            console.log("app.get GET COMMENTS BY IMAGE ID", comments);
+            response.json(comments);
+        })
         .catch((error) => {
             console.log(
                 "[imageboard:express] error getting image comment",
