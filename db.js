@@ -1,6 +1,6 @@
 const spicedPg = require("spiced-pg");
-
 const database = process.env.DB || "imageboard";
+const DEFAULT_LIMIT = 3;
 
 function getDatabaseURL() {
     if (process.env.DATABASE_URL) {
@@ -12,9 +12,19 @@ function getDatabaseURL() {
 
 const db = spicedPg(getDatabaseURL());
 
-function getImages() {
+function getImages({ last_id, limit }) {
+    if (last_id) {
+        return db
+            .query(
+                "SELECT * FROM images WHERE id < $1 ORDER BY id DESC LIMIT $2",
+                [last_id, limit || DEFAULT_LIMIT]
+            )
+            .then((result) => result.rows);
+    }
     return db
-        .query("SELECT * FROM images ORDER BY id DESC")
+        .query("SELECT * FROM images ORDER BY id DESC LIMIT $1", [
+            limit || DEFAULT_LIMIT,
+        ])
         .then((result) => result.rows);
 }
 

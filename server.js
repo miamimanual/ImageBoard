@@ -16,7 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get("/images", (request, response) => {
-    getImages()
+    console.log("REQUEST.QUERY", request.query);
+    getImages(request.query)
         .then((results) => {
             response.json(results);
         })

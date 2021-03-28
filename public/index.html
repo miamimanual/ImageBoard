@@ -9,11 +9,6 @@
 
 <main id="main">
     <h1>Imageboard</h1>    
-    <detail 
-    v-bind:description="originalText"
-    @click="updateDescription">
-    </detail>
-
 
       <section>
 
@@ -43,7 +38,7 @@
     </section>
 
     <section class="images">
-        <ul v-if="images.length > 0" class="images">
+    <ul v-if="images.length > 0" class="images">
         <li v-for="image in images" v-on:click="onClick(image.id)"> 
             <article class="image">
                 <img :src="image.url" :alt="image.description">
@@ -51,6 +46,11 @@
             </article>
         </li>
     </ul>
+    
+    <button 
+    v-if="images.length > 0 && imagesAvailable"
+    v-on:click="onMoreImagesClick">More</button> 
+
     </section>
 
     <popup 
@@ -101,16 +101,6 @@
 
         </form>
     </section>
-</script>
-
-
-
-<script id="detail" type="text/x-template">
-        <div class="detail">
-            <h1>{{ title }}</h1>
-            <p>{{ description }}</p>
-            <button v-on:click="onButtonClick">Update description</button>
-        </div>
 </script>
 
 

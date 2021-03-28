@@ -56,21 +56,6 @@
         },
     });
 
-    Vue.component("detail", {
-        template: "#detail",
-        props: ["description"],
-        data: function () {
-            return {
-                title: "TEST COMPONENT",
-            };
-        },
-        methods: {
-            onButtonClick: function () {
-                this.$emit("click");
-            },
-        },
-    });
-
     new Vue({
         el: "#main",
         data: {
@@ -81,21 +66,28 @@
             file: null,
             images: [],
             currentImageId: null, // why null
+            lastImageId: null,
+            IMG_LIMIT: 3,
+            imagesAvailable: true,
         },
 
         mounted: function () {
-            setTimeout(() => {
-                this.originalText = "This app is not so great actually.";
-            }, 2000);
             axios.get("/images").then((response) => {
-                console.log(response);
+                console.log("mounted RESPONSE DATA", response.data);
+                console.log(
+                    "mounted RESPONSE DATA LENGTH",
+                    response.data.length
+                );
+
                 this.images = response.data; // oslanja se na Vue
+                this.lastImageId = response.data[response.data.length - 1].id;
+            });
+            window.addEventListener("hashchange", () => {
+                this.currentImageId = window.location.hash.slice(1);
+                console.log("WINDOW LOCATION HASH", window.location.hash);
             });
         },
         methods: {
-            updateDescription: function () {
-                this.originalText = "This is app is not so great actually.";
-            },
             onSubmit: function () {
                 const formData = new FormData();
                 formData.append("title", this.title);
@@ -119,6 +111,36 @@
             },
             onClose: function () {
                 this.currentImageId = null;
+            },
+            onMoreImagesClick: function () {
+                this.getMoreImages();
+            },
+            getMoreImages: function () {
+                axios
+                    .get("/images", {
+                        params: {
+                            last_id: this.lastImageId,
+                            limit: this.IMG_LIMIT,
+                        },
+                    })
+                    .then((response) => {
+                        console.log("RESPONSE", response);
+                        console.log("RESPONSE DATA", response.data);
+                        console.log(
+                            "RESPONSE DATA LENGTH",
+                            response.data.length
+                        );
+                        this.images = [...this.images, ...response.data];
+                        this.lastImageId =
+                            response.data[response.data.length - 1].id;
+
+                        if (
+                            response.data.length !== this.IMG_LIMIT ||
+                            this.lastImageId === 1
+                        ) {
+                            this.imagesAvailable = false;
+                        }
+                    });
             },
         },
     });
