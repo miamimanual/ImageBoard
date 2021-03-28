@@ -18,9 +18,7 @@ app.use(express.json());
 app.get("/images", (request, response) => {
     getImages()
         .then((results) => {
-            //console.log(results);
             response.json(results);
-            // return;
         })
         .catch((error) => {
             console.log("error", error);
@@ -30,11 +28,9 @@ app.get("/images", (request, response) => {
 
 app.get("/images/:imageId/comments", (request, response) => {
     const imageId = request.params.imageId;
-    console.log("request.params.imageId", request.params.imageId);
-    console.log("imageID by app.get", imageId);
+
     getCommentsByImageId(imageId)
         .then((comments) => {
-            console.log("app.get GET COMMENTS BY IMAGE ID", comments);
             response.json(comments);
         })
         .catch((error) => {
@@ -48,10 +44,10 @@ app.get("/images/:imageId/comments", (request, response) => {
 
 app.post("/images/:imageId/comments", (request, response) => {
     const { imageId } = request.params;
-    // const { username } = request.body.username;
-    //const { text } = request.body.text;
+    const { username } = request.body;
+    const { text } = request.body;
 
-    addCommentToImage({ imageId, ...request.body })
+    addCommentToImage({ imageId, username, text }) // ...request.body
         .then((comment) => response.json(comment))
         .catch((error) => {
             console.log(
@@ -72,17 +68,8 @@ app.post("/images", uploader.single("file"), s3upload, (request, response) => {
         });
 });
 
-/*
-app.get("/images/:imageId", (request, response) => {
-    const imageId = request.body.imageId;
-}); */
-
 app.get("/images/:imageId", (request, response) => {
     const imageId = request.params.imageId;
-    console.log("IMAGEID", request.params.imageId);
-    console.log("body IMAGEID", request.body.imageId);
-    console.log("request.body");
-    console.log("request.params");
 
     getImageById(imageId)
         .then((result) => {
@@ -99,19 +86,3 @@ app.get("/images/:imageId", (request, response) => {
 });
 
 app.listen(process.env.PORT || 8080);
-
-/*
-app.get("/upload", (request, response) => {
-    response.send(`
-    <form enctype="multipart/form-data" action="/upload" method="POST">
-        <input type="file" accept="image/*" name="file" required>
-        <button type="submit">Upload</button>
-    </form>
-    `);
-});
-
-app.post("/upload", uploader.single("file"), (request, response) => {
-    console.log("upload successful", request.file);
-    response.sendStatus(200);
-});
-*/

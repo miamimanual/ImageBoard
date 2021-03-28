@@ -13,11 +13,6 @@
 
             axios.get(`/images/${this.imageId}`).then((response) => {
                 this.image = response.data[0]; // oslanja se na Vue
-                console.log("THIS iMAGEid", this.imageId);
-                console.log("THIS image", this.image);
-                console.log("THIS image", this.images); // undefined
-                console.log("response 0", response.data[0]);
-                console.log("response", response.data);
             });
         },
         methods: {
@@ -43,7 +38,6 @@
                 console.log("RESPONSE DATA", response.data);
                 this.comments = response.data;
             });
-            console.log("Comments", this.comments); // oslanja se na Vue
         },
         methods: {
             onSubmit: function () {
@@ -52,7 +46,6 @@
                         username: this.username,
                         text: this.text,
                         imageId: this.imageId,
-                        //  comments: this.comments,
                     })
                     .then((response) => {
                         this.comments.push(response.data);
@@ -104,7 +97,6 @@
                 this.originalText = "This is app is not so great actually.";
             },
             onSubmit: function () {
-                console.log("onSubmit");
                 const formData = new FormData();
                 formData.append("title", this.title);
                 formData.append("description", this.description);
@@ -116,7 +108,7 @@
                             "Content-Type": "multipart/form-data",
                         },
                     })
-                    .then((response) => this.images.push(response.data)); // bilo je detail, to je bila greska
+                    .then((response) => this.images.push(response.data));
             },
             onFileSelect: function () {
                 this.file = this.$refs.image.files[0]; //proveri sta je refs
@@ -131,13 +123,3 @@
         },
     });
 })();
-
-/*
-
- onSubmit: function () {
-                const formData = new FormData();
-                formData.append("file", file);
-                axios.post("/upload", formData);
-            },
-
-*/
