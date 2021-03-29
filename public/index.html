@@ -40,10 +40,12 @@
 
     <section class="images">
     <ul v-if="images.length > 0" class="images">
-        <li v-for="image in images" v-on:click="onClick(image.id)"> 
-            <article class="image">
+        <li v-for="image in images"> 
+            <article class="imageBox">
+                <a class="imageLink" :href="'#' + image.id">
                 <img class="img" :src="image.url" :alt="image.description">
                 <p class="description">{{ image.description }}</p>
+                </a>
             </article>
         </li>
     </ul>
@@ -63,7 +65,8 @@
 </main>
 
 <script id="popup" type="text/x-template">
-    <div class="popup"> 
+    <div class="popup">
+      <!--  <a v-bind:href="'#' + image.prev">prev</a> -->
         <div class="popup-box">
         <button v-on:click="close">x</button>
         <img class="popup-image" :src="image.url" alt="">
@@ -79,6 +82,8 @@
             <comments v-bind:image-id="imageId"></comments>
         </div>
         </div>
+       <!-- <a v-bind:href="'#' + image.next">next</a> -->
+
     </div>
 </script>
 

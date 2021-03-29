@@ -68,3 +68,9 @@ module.exports = {
     addCommentToImage,
     getCommentsByImageId,
 };
+
+/*
+(SELECT MAX(id) FROM images WHERE id < $1) AS prev, 
+(SELECT MIN(id) FROM images WHERE id > $1) AS next,
+
+*/

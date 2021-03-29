@@ -31,7 +31,7 @@ img {
 
 .img:hover {
     width: 25rem;
-    /* background-color: rgba(10, 6, 32, 0.911);*/
+    /*background-color: rgba(10, 6, 32, 0.911);*/
 }
 
 .fields {
@@ -113,3 +113,30 @@ form {
     flex: 1;
     line-height: 2rem;
 }
+
+/*
+TRY THIS OUT
+
+.description {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s, visibility 0.2s;
+    border-radius: 7px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageBox:hover .Description {
+    visibility: visible;
+    opacity: 1;
+}
+*/

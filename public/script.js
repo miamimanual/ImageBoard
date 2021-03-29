@@ -8,16 +8,24 @@
             };
         },
         mounted: function () {
-            console.log("THIS iMAGEid", this.imageId);
-            console.log("THIS image", this.image);
-
-            axios.get(`/images/${this.imageId}`).then((response) => {
-                this.image = response.data[0]; // oslanja se na Vue
-            });
+            console.log("[vue:modal] mounted", this.imageId);
+            this.getInfo();
         },
         methods: {
             close: function () {
                 this.$emit("close");
+            },
+            getInfo: function () {
+                console.log("[vue:modal] gettingo info", this.imageId);
+                axios.get(`/images/${this.imageId}`).then((response) => {
+                    this.image = response.data[0]; // oslanja se na Vue
+                });
+            },
+        },
+        watch: {
+            imageId: function () {
+                console.log("[vue:modal] imageId changed", this.imageId);
+                this.getInfo();
             },
         },
     });
@@ -59,7 +67,6 @@
     new Vue({
         el: "#main",
         data: {
-            originalText: "It´s working",
             title: "",
             description: "",
             username: "",
@@ -77,9 +84,13 @@
                 this.lastImageId = response.data[response.data.length - 1].id;
             });
             window.addEventListener("hashchange", () => {
-                console.log("hash", window.location.hash);
+                console.log("HASH", window.location.hash);
+                console.log("HASH SLICE", window.location.hash.slice(1));
+                console.log("LOCATION", window.location);
+                console.log("[vue:main] hash changed", window.location.hash);
                 this.currentImageId = window.location.hash.slice(1);
             });
+            this.currentImageId = window.location.hash.slice(1);
         },
         methods: {
             onSubmit: function () {
