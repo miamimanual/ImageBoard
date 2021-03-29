@@ -37,16 +37,17 @@
     </form>
     </section>
 
+
     <section class="images">
     <ul v-if="images.length > 0" class="images">
         <li v-for="image in images" v-on:click="onClick(image.id)"> 
             <article class="image">
-                <img :src="image.url" :alt="image.description">
+                <img class="img" :src="image.url" :alt="image.description">
                 <p class="description">{{ image.description }}</p>
             </article>
         </li>
     </ul>
-    
+
     <button 
     v-if="images.length > 0 && imagesAvailable"
     v-on:click="onMoreImagesClick">More</button> 
@@ -63,16 +64,20 @@
 
 <script id="popup" type="text/x-template">
     <div class="popup"> 
+        <div class="popup-box">
         <button v-on:click="close">x</button>
-        <img :src="image.url" alt="">
-        <p class="title">{{ image.title }}</p>
-        <p class="description">{{ image.description }}</p>
-        <p class="info">
+        <img class="popup-image" :src="image.url" alt="">
+        <div class="popup-inxobox">
+        <p class="popup-title">{{ image.title }}</p>
+        <p class="popup-description">{{ image.description }}</p>
+        <p class="popup-info">
             Uploaded by:<p class="username">{{ image.username }}</p>
             on <time>{{ image.created_at }}</time>
-        </p>        
+        </p>  
+        </div>      
         <div class="popup-comments">
             <comments v-bind:image-id="imageId"></comments>
+        </div>
         </div>
     </div>
 </script>
@@ -95,7 +100,7 @@
             <input type="text" name="username" id="username" 
             placeholder="Type your username" v-model="username" required/>
             <textarea name="comment-text" id="comment-text" 
-            cols="30" rows="10" placeholder="Type your comment" v-model="text" required>
+            cols="30" rows="2" placeholder="Type your comment" v-model="text" required>
             </textarea>    <!-- bound to text -->
             <button id="button" type="submit">Send</button>
 

@@ -73,18 +73,12 @@
 
         mounted: function () {
             axios.get("/images").then((response) => {
-                console.log("mounted RESPONSE DATA", response.data);
-                console.log(
-                    "mounted RESPONSE DATA LENGTH",
-                    response.data.length
-                );
-
                 this.images = response.data; // oslanja se na Vue
                 this.lastImageId = response.data[response.data.length - 1].id;
             });
             window.addEventListener("hashchange", () => {
+                console.log("hash", window.location.hash);
                 this.currentImageId = window.location.hash.slice(1);
-                console.log("WINDOW LOCATION HASH", window.location.hash);
             });
         },
         methods: {
@@ -124,12 +118,6 @@
                         },
                     })
                     .then((response) => {
-                        console.log("RESPONSE", response);
-                        console.log("RESPONSE DATA", response.data);
-                        console.log(
-                            "RESPONSE DATA LENGTH",
-                            response.data.length
-                        );
                         this.images = [...this.images, ...response.data];
                         this.lastImageId =
                             response.data[response.data.length - 1].id;
